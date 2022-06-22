@@ -1,6 +1,16 @@
 import tkinter as tk
 from tkinter.ttk import *
 
+from operations.extractImages import extractImages
+
+
+def operationGiver():
+    if var.get() == 1:
+        extractImages()
+        
+
+
+
 ffg = 'black'
 menu = tk.Tk()
 menu.resizable(False, False)
@@ -10,8 +20,10 @@ photo = tk.PhotoImage(file="./resources/icons.png")
 menu.iconphoto(False, photo)
 
 menubar = tk.Menu(menu)
-menubar.add_command(label="Quit!")
-menu.config(menu=menubar)      
+
+menubar.add_command(label="About")
+menu.config(menu=menubar)
+
 
 head = tk.Label(menu, text="YOLOtate")
 head.config(font=('Courier', 35, 'bold', 'underline'), fg=ffg)
@@ -30,8 +42,14 @@ R2 = tk.Radiobutton(menu, text="Annotate Images", variable=var, value=2)
 R2.config(font=('Arial', 17))
 R2.place(x=25, y=300)
 
-enterBorder = tk.Frame(menu, highlightbackground="black",highlightthickness=2, bd=0)
-enter = tk.Button(enterBorder, text='Submit', fg='black', font=(("Times New Roman"), 15))
+
+enterBorder = tk.Frame(menu, highlightbackground="black",
+                       highlightthickness=2, bd=0)
+enter = tk.Button(enterBorder, text='Submit', fg='black',
+                  font=(("Times New Roman"), 15),command=operationGiver)
+
+
+
 enter.pack()
 enterBorder.place(x=350, y=300)
 
