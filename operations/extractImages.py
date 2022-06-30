@@ -2,8 +2,6 @@ import tkinter as tk
 from tkinter import filedialog
 from functools import partial
 from bing_images import bing
-import subprocess
-import sys
 import webbrowser
 
 

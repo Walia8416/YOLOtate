@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter.ttk import *
+from operations.annotateImages import annotateImages
 
 from operations.extractImages import extractImages
 
@@ -7,6 +8,9 @@ from operations.extractImages import extractImages
 def operationGiver():
     if var.get() == 1:
         extractImages()
+
+    else:
+        annotateImages()
         
 
 
