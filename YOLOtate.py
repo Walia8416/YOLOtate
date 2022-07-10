@@ -11,8 +11,6 @@ def operationGiver():
 
     else:
         annotateImages()
-        
-
 
 
 ffg = 'black'
@@ -50,8 +48,7 @@ R2.place(x=25, y=300)
 enterBorder = tk.Frame(menu, highlightbackground="black",
                        highlightthickness=2, bd=0)
 enter = tk.Button(enterBorder, text='Submit', fg='black',
-                  font=(("Times New Roman"), 15),command=operationGiver)
-
+                  font=(("Times New Roman"), 15), command=operationGiver)
 
 
 enter.pack()

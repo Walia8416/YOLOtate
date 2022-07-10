@@ -5,27 +5,14 @@ from bing_images import bing
 import webbrowser
 
 
-
-
-
-def extract(a,b,c):
-    bing.download_images(str(b.get()),
-                      int(c.get()),
-                      output_dir=str(a.get()),
-                      pool_size=1,
-                      file_type="jpg",
-                      force_replace=True,
-                      extra_query_params='&first=1')
+def extract(a, b, c):
+    bing.download_images(str(b.get()),int(c.get()),output_dir=str(a.get()),pool_size=1,file_type="jpg",force_replace=True,extra_query_params='&first=1')
 
     path = str(a.get())
     webbrowser.open(path)
     a.delete(0, tk.END)
     b.delete(0, tk.END)
     c.delete(0, tk.END)
-    
-   
-
-    
 
 
 def selectDir(dirs):
@@ -79,7 +66,7 @@ def extractImages():
     executeBorder = tk.Frame(
         win, highlightbackground="black", highlightthickness=2, bd=0)
     execute = tk.Button(executeBorder, text='Submit', fg='black', font=(
-        ("Times New Roman"), 15), command=partial(extract, dirs,searchQuery,image_num))
+        ("Times New Roman"), 15), command=partial(extract, dirs, searchQuery, image_num))
     execute.pack()
     executeBorder.place(x=300, y=250)
 

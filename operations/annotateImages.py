@@ -1,4 +1,5 @@
 from functools import partial
+from operator import concat
 import tkinter as tk
 from tkinter import filedialog
 import os
@@ -13,53 +14,48 @@ def selectDir(dirs):
     dirs.insert(0, folder_selected)
 
 
-def drawBoundBox(event,x,y,flags,param):
-    global x1,y1,x2,y2,dragging
+def drawBoundBox(event, x, y, flags, param):
+    global x1, y1, x2, y2, dragging
     dragging = False
     if (event == cv2.EVENT_LBUTTONDOWN):
-        x1,y1 = x,y
+        x1, y1 = x, y
         dragging = True
 
     elif (event == cv2.EVENT_MOUSEMOVE):
         if(dragging == True):
-            cv2.rectangle(param[0],(x1,y1),(x,y),(255,0,0))
-           
-            
+            cv2.rectangle(param[0], (x1, y1), (x, y), (0, 255, 0))
 
     elif (event == cv2.EVENT_LBUTTONUP):
-        x2,y2 = x,y
-        dragging=False
-        cv2.rectangle(param[0],(x1,y1),(x2,y2),(255,0,0))
-        print(x1,y1,x2,y2)
-        
+        x2, y2 = x, y
+        dragging = False
+        cv2.rectangle(param[0], (x1, y1), (x2, y2), (0, 255, 0))
+        print(x1, y1, x2, y2)
+        f = open(param[2],"w")
+        temps = str(x1)+str(y1)+str(x2)+str(y2)
+        f.write(temps)
+        f.close()
 
-
-        
 
 
 
 def iterateImages(dirs):
     for images in os.listdir(dirs.get()):
-        
+
         gg = str(dirs.get()+"/"+images)
-        gg.replace('/','\\')
+        gg.replace('/', '\\')
         print(gg)
         im = cv2.imread(gg)
-        im = cv2.resize(im,(600,600))
+        im = cv2.resize(im, (600, 600))
+        cv2.imwrite(gg, im)
         cv2.namedWindow("bru")
-        param = [im,images]
-        cv2.setMouseCallback('bru',drawBoundBox,param)
+        param = [im, images,gg]
+        cv2.setMouseCallback('bru', drawBoundBox, param)
         while(1):
-            cv2.imshow("bru",im)
+            cv2.imshow("bru", im)
             k = cv2.waitKey(1) & 0xFF
-            if (k==27):
-                break;
+            if (k == 27):
+                break
         cv2.destroyAllWindows()
-            
-    
-       
-      
-
 
 
 def annotateImages():
@@ -71,8 +67,6 @@ def annotateImages():
     head = tk.Label(win, text="Please select path to images:-")
     head.config(font=('Open Sans', 10), fg=ffg)
     head.place(x=5, y=13)
-    
-  
 
     dirs = tk.Entry(win, bd=3, width=30)
     dirs.config(font=('Open Sans', 10), fg=ffg)
@@ -88,9 +82,8 @@ def annotateImages():
     executeBorder = tk.Frame(
         win, highlightbackground="black", highlightthickness=2, bd=0)
     execute = tk.Button(executeBorder, text='Begin', fg='black', font=(
-        ("Times New Roman"), 15),command=partial(iterateImages,dirs))
+        ("Times New Roman"), 15), command=partial(iterateImages, dirs))
     execute.pack()
     executeBorder.place(x=200, y=150)
-    
 
     win.mainloop()
